@@ -1,9 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
 
-// this is a comment
+	"github.com/ottogiron/chapi/server"
+	"github.com/ottogiron/eventsapi/controllers"
+)
 
 func main() {
-	fmt.Println("Hello World")
+	connectionSTring := ":" + os.Getenv("PORT")
+	server := server.NewServer()
+	server.Register(&controllers.HelloController{})
+	runError := server.Run(connectionSTring)
+	if runError != nil {
+		fmt.Println("Error when running server", runError)
+	}
 }
